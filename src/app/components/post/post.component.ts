@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MessagesService } from 'src/app/services/messages.service';
 
 @Component({
   
@@ -13,11 +14,24 @@ export class PostComponent {
   tweetMaxLenght: number = 240
   tweetRemain: number = this.tweetMaxLenght
 
-  sendTweet(){
-    alert(this.tweetMessage)
+  constructor(private service: MessagesService){
+
   }
 
+  /* vai add a mensagem no service, resetar o contador apos ela ser */ 
+  sendTweet(){
+    this.service.addMessage(this.tweetMessage)
+    this.tweetMessage =""
+    this.tweetRemain = this.tweetMaxLenght  
+  }
+
+  
   changeTweet(){
-    this.tweetRemain = 240 - this.tweetMessage.length
+    this.tweetRemain = this.tweetMaxLenght - this.tweetMessage.length
   }
 }
+  /* assim fica preso nos 240, agora vc pode alterar la em cima para qqlr valor 
+  alterando todas de uma vez
+  changeTweet(){
+    this.tweetRemain = 240 - this.tweetMessage.length
+*/
